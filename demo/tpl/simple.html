@@ -1,0 +1,111 @@
+<div class="container" style="padding-top:50px" ng-controller="SimpleCtrl">
+    <form >
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Icon expand:</label>
+                    <input type="text" class="form-control" ng-model="iconExpand" placeholder="icon-plus glyphicon glyphicon-plus fa fa-plus text-info">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Icon collapse:</label>
+                    <input type="text" class="form-control" ng-model="iconCollapse" placeholder="icon-minus glyphicon glyphicon-minus fa fa-minus text-info">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Icon leaf:</label>
+                    <input type="text" class="form-control" ng-model="iconLeaf" placeholder="icon-file glyphicon glyphicon-file fa fa-file text-info">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Icon select:</label>
+                    <input type="text" class="form-control" ng-model="iconSelect" placeholder="icon-check glyphicon glyphicon-ok fa fa-check text-info">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Label class:</label>
+                    <input type="text" class="form-control" ng-model="labelClass" placeholder="text-info">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Cacade:</label>
+                    <select class="form-control" ng-model="cascade" ng-options="m.key as m.value for m in [{key:undefined, value: 'Default'},{key:true, value: 'True'},{key:false, value: 'False'}]" ng-change="resetDisableSelect()">  
+                    </select>
+                    <span class="text-danger">If Cacade is true, then disableSelect will be always true</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Reverse:</label>
+                    <select class="form-control" ng-model="reverse" ng-options="m.key as m.value for m in [{key:undefined, value: 'Default'},{key:true, value: 'True'},{key:false, value: 'False'}]" ng-change="resetDisableSelect()">  
+                    </select>
+                    <span class="text-danger">If Reverse is true, then disableSelect will be always true</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Disable select::</label>
+                    <select class="form-control" ng-model="disableSelect" ng-options="m.key as m.value for m in [{key:undefined, value: 'Default'},{key:true, value: 'True'},{key:false, value: 'False'}]">  
+                    </select>
+                </div>
+            </div>
+        </div>
+        <hr class="divider" />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Root number:</label>
+                    <input type="text" class="form-control" ng-model="rootNumber" ng-change="initTree()" placeholder="1">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Children size:</label>
+                    <input type="text" class="form-control" ng-model="childrenSize" ng-change="initTree()" placeholder="1">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Level number:</label>
+                    <input type="text" class="form-control" ng-model="levelNumber" ng-change="initTree()" placeholder="1">
+                </div>
+            </div>
+        </div>
+    </form>
+   
+<pre>
+Code Here:
+
+&lt;uib-tree tree-model="treeModel" icon-expand="{{iconExpand}}" icon-collapse="{{iconCollapse}}" icon-leaf="{{iconLeaf}}" icon-select="{{iconSelect}}" label-class="{{labelClass}}" cascade="{{cascade}}" reverse="{{reverse}}" disable-select="{{disableSelect}}"&gt;&lt;/uib-tree&gt;   
+</pre>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <uib-tree tree-model="treeModel" icon-expand="{{iconExpand}}" icon-collapse="{{iconCollapse}}" icon-leaf="{{iconLeaf}}" icon-select="{{iconSelect}}" label-class="{{labelClass}}" cascade="{{cascade}}" reverse="{{reverse}}" disable-select="{{disableSelect}}"></uib-tree>
+        </div>
+        <div class="panel-footer">
+            <button class="btn btn-primary" ng-click="expandAll()">Expand All</button>
+            
+            <input type="text" placeholder="Input expand level" ng-model="expandLevel" style="height:35px">
+            <button class="btn btn-primary" ng-click="expandByLevel()">Expand By Level</button>
+            <button class="btn btn-primary" ng-click="collapseAll()">Collapse All</button>
+            <button class="btn btn-primary" ng-click="getSelectedTreeModel()">Get Selected Tree Model</button>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            You selected:
+            <uib-tree tree-model="selectedTreeModel" disable-select="true"></uib-tree>
+        </div>
+    </div>
+    
+</div>

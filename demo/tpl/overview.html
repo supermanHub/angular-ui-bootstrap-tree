@@ -1,0 +1,152 @@
+<div class="jumbotron">
+    <div class="container">
+        <h1>Angular UI Bootstrap Tree</h1>
+        <p>uibTree is a angular directive used to create a treeview in html. It has a very high performance and allow to create unlimited nest treeview. It also provider a util service which used to operate the tree view.</p>
+        <p><a class="btn btn-primary btn-lg" href="https://github.com/supermanHub/angular-ui-bootstrap-tree" role="button">Fork on Git &raquo;</a></p>
+    </div>
+</div>
+<div class="container" ng-controller="OverviewCtrl">
+	<div class="panel panel-primary">
+	  <div class="panel-heading"><b>Global Settings</b></div>
+	  <div class="panel-body">
+	    <ul>
+	    	<li>
+	    		<span><b class="text-danger">TreeModel</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">iconExpand</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">iconCollapse</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">iconLeaf</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">iconSelect</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">labelClass</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">cascade</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">reverse</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">disableSelect</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">onSelect</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">onDeselect</b></span>
+	    	</li>
+	    </ul>
+	  </div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="panel panel-primary">
+	  <div class="panel-heading"><b>How to use</b></div>
+	  <div class="panel-body">
+	    <ul>
+	    	<li>
+	    		<span><b class="text-danger">Step 1: Include the directive and its css</b></span>
+<pre>
+&lt;script src="path_to/ui-bootstrap-tree.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="path_to/ui-bootstrap-tree.css" type="text/css" /&gt;
+</pre>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">Step 2: Create you angular app and reject the directive</b></span>
+<pre>
+var yourApp = angular.module('yourApp', [
+	'ui.bootstrap', //based on bootstrap, please inlcude angular ui bootstrap in html first
+	'ui.bootstrap.tree'
+])
+</pre>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">Step 3: Create a controller</b></span>
+<pre>
+yourApp.controller('TreeCtrl', ['$scope', function($scope){
+	$scope.treeModel = {
+		label: 'Root'
+	};
+
+	//Or
+	//$scope.treeModel = [{
+	//	label: 'Root 1',
+	//	children: [
+	//		{
+	//			label: 'Child 1'
+	//		},
+	//		{
+	//			label: 'Child 2'
+	//		}
+	//	]
+	//},{
+	//	label: 'Root 2',
+	//	children: [
+	//		{
+	//			label: 'Child 1'
+	//		},
+	//		{
+	//			label: 'Child 2'
+	//		}
+	//	]
+	//}]
+}]);	
+</pre>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">Step 4: Use the directive in HTML</b></span>
+<pre>
+&lt;uib-tree tree-model="treeModel"&gt;&lt;/uib-tree&gt;	
+</pre>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">Step 5: If you want to use the uibTreeUtil,please inject it in controller</b></span>
+<pre>
+yourApp.controller('TreeCtrl', ['$scope', 'uibTreeUtil', function($scope,uibTreeUtil){
+	$scope.treeModel = {
+		label: 'Root'
+	};
+
+	$scope.expandAll =  function(){
+		uibTreeUtil.expandAll($scope.treeModel);
+	}
+
+}]);
+</pre>
+	    	</li>
+	    </ul>
+	  </div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="panel panel-primary">
+	  <div class="panel-heading"><b>uibTreeUtil Functions</b></div>
+	  <div class="panel-body">
+	    <ul>
+	    	<li>
+	    		<span><b class="text-danger">uibTreeUtil.expandAll(treeModel)</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">uibTreeUtil.expandByLevel(level)</b><span class="text-muted"> level is number large than 0</span></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">uibTreeUtil.collapseAll(treeModel)</b></span>
+	    	</li>
+	    	<li>
+	    		<span><b class="text-danger">uibTreeUtil.getSelectedTreeModel(treeModel)</b></span>
+	    	</li>
+	    </ul>
+	  </div>
+	</div>
+</div>
+

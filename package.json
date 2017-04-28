@@ -1,0 +1,29 @@
+{
+  "name": "angular-ui-bootstrap-tree",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node node_modules/http-server/bin/http-server -o"
+  },
+  "author": "Wenbo Wang",
+  "license": "ISC",
+  "devDependencies": {
+    "angular": "^1.6.4",
+    "angular-animate": "^1.6.4",
+    "angular-touch": "^1.6.4",
+    "angular-ui-bootstrap": "^2.5.0",
+    "angular-ui-router": "^0.4.2",
+    "animate": "^1.0.0",
+    "animate.css": "^3.5.2",
+    "bootstrap": "^3.3.7",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^2.1.0",
+    "grunt-contrib-uglify": "^2.3.0",
+    "http-server": "^0.9.0",
+    "jquery": "^2.1.4",
+    "oclazyload": "^1.1.0"
+  }
+}
