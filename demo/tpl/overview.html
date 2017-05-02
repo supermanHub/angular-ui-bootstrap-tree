@@ -73,9 +73,9 @@ var yourApp = angular.module('yourApp', [
 	    		<span><b class="text-danger">Step 3: Create a controller</b></span>
 <pre>
 yourApp.controller('TreeCtrl', ['$scope', function($scope){
-	$scope.treeModel = {
+	$scope.treeModel = [{
 		label: 'Root'
-	};
+	}];//must be a array
 
 	//Or
 	//$scope.treeModel = [{
@@ -112,9 +112,9 @@ yourApp.controller('TreeCtrl', ['$scope', function($scope){
 	    		<span><b class="text-danger">Step 5: If you want to use the uibTreeUtil,please inject it in controller</b></span>
 <pre>
 yourApp.controller('TreeCtrl', ['$scope', 'uibTreeUtil', function($scope,uibTreeUtil){
-	$scope.treeModel = {
+	$scope.treeModel = [{
 		label: 'Root'
-	};
+	}];//must be a array
 
 	$scope.expandAll =  function(){
 		uibTreeUtil.expandAll($scope.treeModel);

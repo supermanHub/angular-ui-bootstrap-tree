@@ -64,19 +64,29 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Root number:</label>
-                    <input type="text" class="form-control" ng-model="rootNumber" ng-change="initTree()" placeholder="1">
+                    <select class="form-control" ng-model="rootNumber" ng-options="m as m for m in [1,2,3,4,5,6,7,8,9,10]" ng-change="initTree()">  
+                    </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Children size:</label>
-                    <input type="text" class="form-control" ng-model="childrenSize" ng-change="initTree()" placeholder="1">
+                    <select class="form-control" ng-model="childrenSize" ng-options="m as m for m in [1,2,3,4,5,6,7,8,9,10]" ng-change="initTree()">  
+                    </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Level number:</label>
-                    <input type="text" class="form-control" ng-model="levelNumber" ng-change="initTree()" placeholder="1">
+                    <select class="form-control" ng-model="levelNumber" ng-options="m as m for m in [2,3,4,5,6,7,8,9,10]" ng-change="initTree()">  
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                    Total tree items: {{totalTreeItem}}
                 </div>
             </div>
         </div>

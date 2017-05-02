@@ -11,7 +11,7 @@ angular.module('ui.bootstrap.tree', [])
 .service('uibTreeUtil', function(){
 
 	var isSelected = function(model){
-		if(model.selected){
+		if(undefined != model.selected && null != model.selected){
 			if(model.selected == true || model.selected == 'true'){
 				return true;
 			}else{
@@ -23,29 +23,52 @@ angular.module('ui.bootstrap.tree', [])
 	}
 
 	var hasChildren = function(model){
-		if(model.children){
-			if(model.children.length <= 0){
-				return false;
+		if(undefined != model.children && null != model.children){
+			if(angular.isArray(model.children)){
+				if(model.children.length > 0){
+					return true;
+				}else{
+					return false;
+				}
 			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	var isExpanded = function(model){
+		if(undefined != model.expanded && null != model.expanded){
+			if(model.expanded == true || model.expanded == 'true'){
 				return true;
-			}	
+			}else{
+				return false;
+			}
 		}else{
 			return false;
 		}
 	}
 
 	var expandModel = function(model){
-		model.expanded = true;
+		if(!isExpanded(model)){
+			model.expanded = true;
+		}
+
 		if(hasChildren(model)){
-			angular.forEach(model.children, function(m){
-				expandModel(m)
-			});
+			for(var i=0; i<model.children.length; i++){
+				expandModel(model.children[i]);
+			}
 		}
 	}
 
 	var expandModelByLevel = function(model,max,current){
-		model.expanded = true;
+		if(!isExpanded(model)){
+			model.expanded = true;
+		}
+
 		current++;
+
 		if(hasChildren(model)){
 			for(var i=0; i < model.children.length; i++){
 				if(current < max){
@@ -58,11 +81,13 @@ angular.module('ui.bootstrap.tree', [])
 	}
 
 	var collapseModel = function(model){
-		model.expanded = false;
+		if(isExpanded(model)){
+			model.expanded = false;
+		}
 		if(hasChildren(model)){
-			angular.forEach(model.children, function(m){
-				collapseModel(m)
-			});
+			for(var i=0; i<model.children.length; i++){
+				collapseModel(model.children[i]);
+			}
 		}
 	}
 
@@ -88,27 +113,26 @@ angular.module('ui.bootstrap.tree', [])
 	return {
 
 		expandAll: function(treeModel){
-			console.log("expandAll");
-			if(angular.isDefined(treeModel)){
-				angular.forEach(treeModel, function(m){
-					expandModel(m);
-				});
+			if(undefined != treeModel && null != treeModel && angular.isArray(treeModel)){
+				for(var i=0; i<treeModel.length; i++){
+					expandModel(treeModel[i]);
+				}
 			}
 		},
 
 		expandByLevel: function(treeModel, level){
-			if(angular.isDefined(treeModel) && level > 0){
-				angular.forEach(treeModel, function(m){
-					expandModelByLevel(m, level, 0);
-				});
+			if(undefined != treeModel && null != treeModel && angular.isArray(treeModel) && level > 0){
+				for(var i=0; i<treeModel.length; i++){
+					expandModelByLevel(treeModel[i], level, 0);
+				}
 			}
 		},
 
 		collapseAll: function(treeModel){
-			if(angular.isDefined(treeModel)){
-				angular.forEach(treeModel, function(m){
-					collapseModel(m);
-				});
+			if(undefined != treeModel && null != treeModel && angular.isArray(treeModel)){
+				for(var i=0; i<treeModel.length; i++){
+					collapseModel(treeModel[i]);
+				}
 			}
 		},
 
@@ -167,16 +191,18 @@ angular.module('ui.bootstrap.tree', [])
 				//Good
 			}
 
-			console.log(scope);
-
 			//Check children
 			var hasChildren = function(model){
-				if(model.children){
-					if(model.children.length <= 0){
-						return false;
+				if(undefined != model.children && null != model.children){
+					if(angular.isArray(model.children)){
+						if(model.children.length > 0){
+							return true;
+						}else{
+							return false;
+						}
 					}else{
-						return true;
-					}	
+						return false;
+					}
 				}else{
 					return false;
 				}
@@ -184,7 +210,7 @@ angular.module('ui.bootstrap.tree', [])
 
 			//Check expanded or ollapsed
 			var isExpanded = function(model){
-				if(model.expanded){
+				if(undefined != model.expanded && null != model.expanded){
 					if(model.expanded == true || model.expanded == 'true'){
 						return true;
 					}else{
@@ -197,7 +223,7 @@ angular.module('ui.bootstrap.tree', [])
 
 			//Check selected or unselected
 			var isSelected = function(model){
-				if(model.selected){
+				if(undefined != model.selected && null != model.selected){
 					if(model.selected == true || model.selected == 'true'){
 						return true;
 					}else{
@@ -209,30 +235,18 @@ angular.module('ui.bootstrap.tree', [])
 			}
 
 			var isCascade = function(){
-				if(!angular.isDefined(scope.cascade) || (scope.cascade != true && scope.cascade != 'true')){
-					return false;
-				}else{
-					return true;
-				}
+				return scope.cascade == 'true';
 			}
 
 			var isReverse = function(){
-				if(!angular.isDefined(scope.reverse) || (scope.reverse != true && scope.reverse != 'true')){
-					return false;
-				}else{
-					return true;
-				}
+				return scope.reverse == 'true';
 			}
 
 			var isDisableSelect = function(){
 				if(isCascade() || isReverse()){
 					return false;
 				}else{
-					if(!angular.isDefined(scope.disableSelect) || (scope.disableSelect != true && scope.disableSelect != 'true')){
-						return false;
-					}else{
-						return true;
-					}
+					return scope.disableSelect == 'true';
 				}
 			}
 
@@ -269,11 +283,11 @@ angular.module('ui.bootstrap.tree', [])
 
 			var cascade_select_tree_node = function(model){
 				if(hasChildren(model)){
-					angular.forEach(model.children, function(m){
-						if(!isSelected(m)){
-							cascade_select_tree_node(m);
+					for(var i=0; i<model.children.length; i++){
+						if(!isSelected(model.children[i])){
+							cascade_select_tree_node(model.children[i]);
 						}
-					})
+					}
 				}
 
 				model.selected = true;
@@ -288,11 +302,11 @@ angular.module('ui.bootstrap.tree', [])
 
 			var select_tree_node = function(model){
 				if(isCascade() && hasChildren(model)){
-					angular.forEach(model.children, function(m){
-						if(!isSelected(m)){
-							cascade_select_tree_node(m);
+					for(var i=0; i<model.children.length; i++){
+						if(!isSelected(model.children[i])){
+							cascade_select_tree_node(model.children[i]);
 						}
-					})
+					}
 				}
 	            
 	            model.selected = true;
@@ -308,11 +322,11 @@ angular.module('ui.bootstrap.tree', [])
 
 			var cascade_deselect_tree_node = function(model){
 				if(hasChildren(model)){
-					angular.forEach(model.children, function(m){
-						if(isSelected(m)){
-							cascade_deselect_tree_node(m);
+					for(var i=0; i<model.children.length; i++){
+						if(isSelected(model.children[i])){
+							cascade_deselect_tree_node(model.children[i]);
 						}
-					});
+					}
 				}
 
 				model.selected = false;
@@ -344,11 +358,11 @@ angular.module('ui.bootstrap.tree', [])
 			var deselect_tree_node = function(model){
 
 				if(isCascade() && hasChildren(model)){
-					angular.forEach(model.children, function(m){
-						if(isSelected(m)){
-							cascade_deselect_tree_node(m);
+					for(var i=0; i<model.children.length; i++){
+						if(isSelected(model.children[i])){
+							cascade_deselect_tree_node(model.children[i]);
 						}
-					})
+					}
 				}
 				
 				if(isReverse()){
@@ -378,20 +392,20 @@ angular.module('ui.bootstrap.tree', [])
 			scope.getUibTreeNodeIcon=function(model){
 				if(hasChildren(model)){
 					if(isExpanded(model)){
-						if(angular.isDefined(model.iconCollapse) && model.iconCollapse != null && model.iconCollapse != ''){
+						if(undefined != model.iconCollapse && model.iconCollapse != null && model.iconCollapse != ''){
 							return model.iconCollapse;
 						}else{
-							if(angular.isDefined(scope.iconCollapse) && scope.iconCollapse != null && scope.iconCollapse != ''){
+							if(undefined != scope.iconCollapse && scope.iconCollapse != ''){
 								return scope.iconCollapse;
 							}else{
 								return 'icon-minus glyphicon glyphicon-minus fa fa-minus text-info';
 							}
 						}
 					}else{
-						if(angular.isDefined(model.iconExpand) && model.iconExpand != null && model.iconExpand != ''){
+						if(undefined != model.iconExpand && model.iconExpand != null && model.iconExpand != ''){
 							return model.iconExpand;
 						}else{
-							if(angular.isDefined(scope.iconExpand) && scope.iconExpand != null && scope.iconExpand != ''){
+							if(undefined != scope.iconExpand && scope.iconExpand != ''){
 								return scope.iconExpand;
 							}else{
 								return 'icon-plus glyphicon glyphicon-plus fa fa-plus text-info';
@@ -399,10 +413,10 @@ angular.module('ui.bootstrap.tree', [])
 						}
 					}
 				}else{
-					if(angular.isDefined(model.iconLeaf) && model.iconLeaf != null && model.iconLeaf != ''){
+					if(undefined != model.iconLeaf && model.iconLeaf != null && model.iconLeaf != ''){
 						return model.iconLeaf;
 					}else{
-						if(angular.isDefined(scope.iconLeaf) && scope.iconLeaf != null && scope.iconLeaf != ''){
+						if(undefined != scope.iconLeaf && scope.iconLeaf != ''){
 							return scope.iconLeaf;
 						}else{
 							return 'icon-file glyphicon glyphicon-file fa fa-file text-info';
@@ -418,10 +432,10 @@ angular.module('ui.bootstrap.tree', [])
 
 			//Get uibTree select icon
 			scope.getUibTreeSelectIcon=function(model){
-				if(angular.isDefined(model.iconSelect) && model.iconSelect != null && model.iconSelect != ''){
+				if(undefined != model.iconSelect && model.iconSelect != null && model.iconSelect != ''){
 					return model.iconSelect;
 				}else{
-					if(angular.isDefined(scope.iconSelect) && scope.iconSelect != null && scope.iconSelect != ''){
+					if(undefined != scope.iconSelect && scope.iconSelect != ''){
 						return scope.iconSelect;
 					}else{
 						return 'icon-check glyphicon glyphicon-ok fa fa-check text-info';
@@ -431,10 +445,10 @@ angular.module('ui.bootstrap.tree', [])
 
 			//Get uibTree Label class
 			scope.getUibTreeLabelClass = function(model){
-				if(angular.isDefined(model.labelClass) && model.labelClass != null && model.labelClass != ''){
+				if(undefined != model.labelClass && model.labelClass != null && model.labelClass != ''){
 					return model.labelClass;
 				}else{
-					if(angular.isDefined(scope.labelClass) && scope.labelClass != null && scope.labelClass != ''){
+					if(undefined != scope.labelClass && scope.labelClass != ''){
 						return scope.labelClass;
 					}else{
 						return 'text-info';
